@@ -11,11 +11,15 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- CUSTOM STYLING -->
+    <style></style>
+
     <link rel="stylesheet" href="css/kc-app-theme-corporate.css">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,300,600,700,800,400" rel="stylesheet" type="text/css">
     <script src="js/vendor/kc-analytics.js"></script>
     <script src="js/vendor/modernizr-latest.js"></script>
-    <style></style>
+    
   </head>
   <body>
     <script>
@@ -36,19 +40,13 @@
         <nav class="navbar">
           <div class="container">
             <div class="navbar-header">
-              <button type="button" data-toggle="collapse" data-target="#global-navbar-collapse" aria-expanded="false" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="fa fa-bars"></span></button><a href="#" class="navbar-brand">KCWeb</a>
+              <button type="button" data-toggle="collapse" data-target="#global-navbar-collapse" aria-expanded="false" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="fa fa-bars"></span></button><a href="https://kc1.sharepoint.com/sites/ecp/Pages/default.aspx" class="navbar-brand">KCWeb</a>
             </div>
             <div id="global-navbar-collapse" class="collapse navbar-collapse">
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Peoplesoft</a></li>
-                <li><a href="#">OWA</a></li>
-                <li class="dropdown"><a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">More&nbsp;<span class="fa fa-caret-down"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                  </ul>
-                </li>
+                <!-- GLOBAL NAVIGATION -->
+                <li><a href="http://www.kingcounty.gov/tools/peoplesoft.aspx">Peoplesoft</a></li>
+                <li><a href="https://owa.kingcounty.gov">OWA</a></li>
               </ul>
             </div>
           </div>
@@ -62,31 +60,18 @@
             <div id="app-nav" class="row">
               <nav id="app-nav-lg" class="navbar">
                 <div class="container">
-                  <div style="" class="navbar-header">
+                  <div class="navbar-header">
                     <button type="button" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="fa fa-ellipsis-v"></span></button>
-                    <!--button.navbar-toggle.collapsed(type="button" data-toggle="collapse" data-target="#app-navbar-collapse-search" aria-expanded="false")
-                    span.sr-only Toggle search
-                    span.fa.fa-search
-                    --><a href="#" class="navbar-brand"><span class="navbar-title">My App Title</span><span class="navbar-subtitle text-muted">My App Subtitle </span>
-                      <!--img(src="https://placehold.it/150x80?text=AppTemplate")--></a>
+
+                    <!-- APP TITLE OR IMG LOGO -->
+                    <a href="/" class="navbar-brand"><span class="navbar-title">My App Title</span><span class="navbar-subtitle text-muted">My App Subtitle </span>
+                    </a>
                   </div>
-                  <!--#app-navbar-collapse-search.collapse
-                  form.navbar-form.navbar-right.visible-xs#app-search-xs(role='search')
-                    .input-group
-                      input.form-control(type='text', placeholder='Search')
-                      span.input-group-btn
-                        button.btn.btn-default(type='submit')
-                          span.fa.fa-search
-                  -->
                   <div id="app-navbar-collapse" class="collapse navbar-collapse">
-                    <!--form.navbar-form.navbar-right.hidden-xs#app-search-lg(role='search')
-                    .form-group
-                      input.form-control(type='text', placeholder='Search')
-                    button.btn.btn-default(type='submit')
-                      span.fa.fa-search
-                    -->
+
+                    <!-- APP NAVIGATION -->
                     <ul class="nav navbar-nav navbar-right">
-                      <li><a href="#"><span class="fa fa-home"></span></a></li>
+                      <li><a href="/"><span class="fa fa-home"></span></a></li>
                       <li><a href="#">Disclaimer</a></li>
                       <li class="dropdown"><a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle">Reports <span class="fa fa-caret-down"></span></a>
                         <ul class="dropdown-menu">
@@ -101,9 +86,11 @@
                 </div>
               </nav>
             </div>
-            <!-- PAGE CONTENT BEGINS HERE-->
+            <!-- REMEMBER TO USE ADDONS TO ADD NEW ROWS OF CONTENT -->
+            <!-- ATTACHED class="row addon-row addon-row-attached" or UNATTACHED class="row addon-row" -->
             <div class="row addon-row addon-row-attached">
               <div class="col-sm-12">
+                <!-- PAGE CONTENT BEGINS HERE-->
                 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</p>
                 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
                 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
@@ -113,6 +100,8 @@
                 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
               </div>
             </div>
+            <!-- REMEMBER TO USE ADDONS TO ADD NEW ROWS OF CONTENT -->
+            <!-- ATTACHED class="row addon-row addon-row-attached" or UNATTACHED class="row addon-row" -->
             <div class="row addon-row">
               <div class="col-sm-12">
                 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</p>
@@ -130,6 +119,7 @@
           <div class="row">
             <div class="col-sm-12">
               <ul class="list-unstyled list-inline">
+                <!-- APP FOOTER LINKS GO HERE -->
                 <li><a href="#">Disclaimer  |</a></li>
                 <li><a href="#">Other resources</a></li>
               </ul>
@@ -144,9 +134,9 @@
             <div class="col-sm-8">
               <ul class="list-unstyled list-inline">
                 <li>© King County 2014 </li>
-                <li><a href="/about/website/privacy" title="Privacy Statement">Privacy </a></li>
-                <li><a href="/about/website/accessibility" title="Accessibility">Accessibility </a></li>
-                <li><a href="/about/website/termsofuse" title="Terms of use">Terms of use</a></li>
+                <li><a href="http://www.kingcounty.gov/about/website/privacy" title="Privacy Statement">Privacy </a></li>
+                <li><a href="http://www.kingcounty.gov/about/website/accessibility" title="Accessibility">Accessibility </a></li>
+                <li><a href="http://www.kingcounty.gov/about/website/termsofuse" title="Terms of use">Terms of use</a></li>
               </ul>
             </div>
           </div>
@@ -160,7 +150,6 @@
     <!--set the background image-->
     <script>
       $('body').chooseBG({ img :'img/hero-driftwood.jpg' });
-      //$(window).on("resize", function(){chooseBG("../../public/img/hero-driftwood-sm.jpg", "../../public/img/hero-driftwood.jpg")}).resize();
     </script>
   </body>
 </html>
