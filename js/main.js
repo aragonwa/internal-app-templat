@@ -1,24 +1,101 @@
 /*
  * Author: King County Web Team
- * Date: 2015-09-04 
  * Description: King County JS file
  */
 $(function () {
-    $('[data-kccomponent]').each(function () {
-        var $this = $(this),
-        url = $this.data('kccomponent') + '.aspx?a=true';
-        $this.html('');
+  $('[data-kccomponent]').each(function () {
+    var $this = $(this),
+      url = $this.data('kccomponent') + '.aspx?a=true';
+    $this.html('');
 
-        $.ajax({
-            type: 'GET',
-            url: url
-        }).done(function (data) {
-            $this.append(data);
-            //for datedlist popovers          
-            $('.popoveritem').popover();
-        });
+    $.ajax({
+      type: 'GET',
+      url: url
+    }).done(function (data) {
+      $this.append(data);
+      // for datedlist popovers          
+      $('.popoveritem').popover();
     });
+  });
 });
+(function ($) {
+  'use strict';
+
+  if (typeof jQuery !== 'undefined') {
+    var filetypes = /\.(ashx.*|jpg|jpeg|png|gif|svg|ai|ps|json|zip|exe|dmg|pdf|doc.*|xls.*|ppt.*|mp3|txt|rar|wma|mov|avi|wmv|mpg|mpeg|flv|wav|mp4|csv|swf|xml)$/i;
+
+    var baseHref = '';
+
+    if ($('base').attr('href') !== undefined) {
+      baseHref = $('base').attr('href');
+    }
+    var hrefRedirect = '';
+
+    $('#main-content').on('click', 'a', function () {
+      var el = $(this);
+      var track = true;
+      var href = (typeof (el.attr('href')) !== 'undefined') ? el.attr('href') : '';
+      var isThisDomain = href.match(document.domain.split('.').reverse()[1] + '.' + document.domain.split('.').reverse()[0]);
+
+      if (!href.match(/^javascript:/i)) {
+        var elEv = [];
+        elEv.value = 0;
+        elEv.nonI = false;
+
+        if (href.match(/^mailto\:/i)) {
+          elEv.category = 'email';
+          elEv.action = 'click';
+          elEv.label = href.replace(/^mailto\:/i, '');
+          elEv.loc = href;
+        }
+        else if (href.match(filetypes)) {
+          // var extension = (/[.]/.exec(href)) ? /[^.]+$/.exec(href) : undefined
+          elEv.category = 'download';
+          elEv.action = 'click';
+          elEv.label = href.replace(/ /g, '-');
+          elEv.loc = baseHref + href;
+        }
+        else if (href.match(/^https?\:/i) && !isThisDomain) {
+          elEv.category = 'external';
+          elEv.action = 'click';
+          elEv.label = href.replace(/^https?\:\/\//i, '');
+          elEv.nonI = true;
+          elEv.loc = href;
+        }
+        else if (href.match(/^tel\:/i)) {
+          elEv.category = 'telephone';
+          elEv.action = 'click';
+          elEv.label = href.replace(/^tel\:/i, '');
+          elEv.loc = href;
+        } else {
+          track = false;
+        }
+
+        if (track) {
+          var ret = true;
+          if ((elEv.category === 'external' || elEv.category === 'download') && (el.attr('target') === undefined || el.attr('target').toLowerCase() !== '_blank')) {
+            hrefRedirect = elEv.loc;
+            ga('send', 'event', elEv.category.toLowerCase(), elEv.action.toLowerCase(), elEv.label.toLowerCase(), elEv.value, {
+              'nonInteraction': elEv.nonI,
+              'hitCallback': gaHitCallbackHandler
+            });
+            ret = false;
+          } else {
+            ga('send', 'event', elEv.category.toLowerCase(), elEv.action.toLowerCase(), elEv.label.toLowerCase(), elEv.value, {
+              'nonInteraction': elEv.nonI
+            });
+          }
+          return ret;
+        }
+      }
+    });
+  }
+
+  function gaHitCallbackHandler () {
+    window.location.href = hrefRedirect;
+  }
+})( jQuery);
+
 (function( $ ){
   'use strict';
   $.fn.eventsCalendar = function( options ) {
@@ -29,7 +106,7 @@ $(function () {
       numItems     : 4,
       title        : 'Events',
       titleIcon    : 'fa-calendar',
-      allItemsUrl  : '!{httpPrefix}//www.kingcounty.gov/about/news/events',
+      allItemsUrl  : '//www.kingcounty.gov/about/news/events',
       allItemsText : 'See all events',
       filter       : ''
     }, options);
@@ -41,7 +118,7 @@ $(function () {
       $this.append('<i class="fa fa-spinner fa-spin fa-4x"></i>');
 
       //Build URL String
-      var dataURL = '!{httpPrefix}//data.kingcounty.gov/resource/' + settings.calNum +
+      var dataURL = '//data.kingcounty.gov/resource/' + settings.calNum +
                     '.json?';
       if(settings.filter){
         dataURL += '&$q=' + settings.filter;
@@ -179,7 +256,7 @@ $(function () {
                 $this.addClass('calendar-events-list');
                 var output = '';
                 output += '<h2><span class=\"fa-stack\"><i class=\"fa fa-square fa-stack-2x\"></i><i class=\"fa '+ settings.titleIcon +' fa-stack-1x fa-inverse\"></i> </span> Events</h2>';
-                output ='<iframe width=\"100%\" height=\"425px\" src=\"!{httpPrefix}//data.kingcounty.gov/w/' + settings.calNum +'\"frameborder=\"0\" scrolling=\"no\"></iframe>';
+                output ='<iframe width=\"100%\" height=\"425px\" src=\"//data.kingcounty.gov/w/' + settings.calNum +'\"frameborder=\"0\" scrolling=\"no\"></iframe>';
                 output += '<p class=\"all-events\"><a href=\"'+ settings.allItemsUrl+'\"><em>'+settings.allItemsUrl+'</em></a></p>';
                 $this.html(output);
             }
@@ -213,12 +290,12 @@ $(function () {
 
     // Create some defaults, extending them with any options that were provided
     var settings = $.extend( {
-      feedURL      : '!{httpPrefix}//feeds.delicious.com/v2/json/kingcounty',
+      feedURL      : '//feeds.delicious.com/v2/json/kingcounty',
       numItems     : 3,
       title        : 'News',
       titleIcon    : 'fa-file-text-o',
       showSummary  : true,
-      allItemsUrl  : '!{httpPrefix}//www.kingcounty.gov/about/news/events',
+      allItemsUrl  : '//www.kingcounty.gov/about/news/events',
       allItemsText : 'See all King County news'
     }, options);
 
@@ -420,7 +497,7 @@ var fakewaffle = ( function ( $, fakewaffle ) {
                 // Convert tab to panel and move to destination
                 $( tabContent )
                     .removeClass( 'tab-pane' )
-                    .addClass( 'panel-body' )
+                    .addClass( 'panel-body fw-previous-tab-pane' )
                     .appendTo( $( destinationId ) );
 
             } );
@@ -439,11 +516,11 @@ var fakewaffle = ( function ( $, fakewaffle ) {
             var destination   = $( destinationId ).next( '.tab-content' )[ 0 ];
 
             // Find the panel contents
-            var panelContents = $( panelGroup ).find( '.panel-body' );
+            var panelContents = $( panelGroup ).find( '.panel-body.fw-previous-tab-pane' );
 
             // Convert to tab and move to destination
             panelContents
-                .removeClass( 'panel-body' )
+                .removeClass( 'panel-body.fw-previous-tab-pane' )
                 .addClass( 'tab-pane' )
                 .appendTo( $( destination ) );
 
@@ -492,56 +569,72 @@ var fakewaffle = ( function ( $, fakewaffle ) {
 (function($) {
     fakewaffle.responsiveTabs(['xs']);
 })(jQuery);
-//<![CDATA[
-      var usasearch_config = { siteHandle:'kingcounty' };
-      var script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = '//search.usa.gov/javascripts/remote.loader.js';
-      document.getElementsByTagName('head')[0].appendChild(script);
-//]]>
-//Crazy Egg tracking code
-setTimeout(function(){
-  var a=document.createElement('script');
-  var b=document.getElementsByTagName('script')[0];
-  a.src=document.location.protocol+'//script.crazyegg.com/pages/scripts/0013/1306.js?"+Math.floor(new Date().getTime()/3600000);';
-  a.async=true;a.type='text/javascript';b.parentNode.insertBefore(a,b);
-}, 1);
+// <![CDATA[
+var usasearch_config = { siteHandle: 'kingcounty' };
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = '//search.usa.gov/javascripts/remote.loader.js';
+document.getElementsByTagName('head')[0].appendChild(script);
+// ]]>
+// Crazy Egg tracking code
+/*setTimeout(function(){
+  var a=document.createElement('script')
+  var b=document.getElementsByTagName('script')[0]
+  a.src=document.location.protocol+'//script.crazyegg.com/pages/scripts/0013/1306.js?'+Math.floor(new Date().getTime()/3600000)
+  a.async=true;a.type='text/javascript';b.parentNode.insertBefore(a,b)
+}, 1)
+*/
 
-
-
-
-//Vertical panels
-var verticalPanels = function($){
+(function($){
   'use strict';
-  function goToByScroll(id){
+  // bind a click event to the 'skip' link
+  $('a.skip-contents').click(function(){ // Need to add a class to skip to links 
+    // strip the leading hash and declare
+    // the content we're skipping to
+    var skipTo = '#'+this.href.split('#')[1];
+    // Setting 'tabindex' to -1 takes an element out of normal 
+    // tab flow but allows it to be focused via javascript
+    $(skipTo).attr('tabindex', -1).on('blur focusout', function () {
+      // when focus leaves this element, 
+      // remove the tabindex attribute
+      $(this).removeAttr('tabindex');
+    }).focus(); // focus on the content container
+    return false;
+  });
+})(jQuery);
+
+// Vertical panels
+var verticalPanels = function ($) {
+  'use strict';
+  function goToByScroll (id) {
     // Remove "link" from the ID
     id = id.replace('link', '');
     // Scroll
     $('html,body').animate({
-      scrollTop: $('#'+id).offset().top
-    },'slow');
+      scrollTop: $('#' + id).offset().top
+    }, 'slow');
   }
-  function init(){
-    //Get parent .addon-row div that are not attached and remove padding
+  function init () {
+    // Get parent .addon-row div that are not attached and remove padding
     $('.addon-row.row .vertical-story-panel')
       .closest('.addon-row')
       .not('.addon-row-attached')
       .css('padding-top', '0')
       .css('padding-bottom', '0');
-    //Grab panel divs
-    //var $panels = $('.addon-row-attached .row.vertical-story-panel');
+    // Grab panel divs
+    // var $panels = $('.addon-row-attached .row.vertical-story-panel')
     var $panels = $('.row.vertical-story-panel');
-    for(var i = 0; i < $panels.length; i++){
+    for (var i = 0; i < $panels.length; i++) {
       $($panels[i]).closest('.addon-row-attached').css('padding-bottom', '0');
-      $($panels[i]).attr('id', 'story-panel-'+ i);
-//      if(i < ($panels.length -1)) {
+      $($panels[i]).attr('id', 'story-panel-' + i);
+      //      if(i < ($panels.length -1)) {
       $($panels[i]).addClass('vertical-story-panel-border');
-  //    }
-      if($($panels[i]).attr('data-vertical-story-panel') === 'scroll'){
-        $($panels[i]).append('<a class="vertical-story-panel-arrow" href="story-panel-'+ (i) +'"><span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-chevron-down fa-stack-1x fa-inverse"></i></span></a>');
+      //    }
+      if ($($panels[i]).attr('data-vertical-story-panel') === 'scroll') {
+        $($panels[i]).append('<a class="vertical-story-panel-arrow" href="story-panel-' + (i) + '"><span class="fa-stack fa-2x"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-chevron-down fa-stack-1x fa-inverse"></i></span></a>');
       }
     }
-    $('.row.vertical-story-panel > a.vertical-story-panel-arrow').click(function(e) {
+    $('.row.vertical-story-panel > a.vertical-story-panel-arrow').click(function (e) {
       e.preventDefault();
       goToByScroll($(this).attr('href'));
     });
@@ -549,8 +642,7 @@ var verticalPanels = function($){
   return {
     init: init
   };
-}( jQuery );
-(function() {
+}(jQuery);(function () {
   'use strict';
   verticalPanels.init();
 })();
@@ -562,9 +654,6 @@ $(function(){
     $('a[href="#"]').click(function (event) {
         event.preventDefault();
     });
-
-    //Initialize Fitvids
-    $('#main-content').fitVids();
 
     /* Prevent Safari opening links when viewing as a Mobile App */
     (function (a, b, c) {
@@ -600,70 +689,3 @@ $(function(){
     });
   };
 })(jQuery);
-/*global jQuery */
-/*jshint browser:true */
-/*!
-* FitVids 1.1
-*
-* Copyright 2013, Chris Coyier - http://css-tricks.com + Dave Rupert - http://daverupert.com
-* Credit to Thierry Koblentz - http://www.alistapart.com/articles/creating-intrinsic-ratios-for-video/
-* Released under the WTFPL license - http://sam.zoy.org/wtfpl/
-*
-*/
-
-(function( $ ){
-
-  "use strict";
-
-  $.fn.fitVids = function( options ) {
-    var settings = {
-      customSelector: null
-    };
-
-    if(!document.getElementById('fit-vids-style')) {
-      // appendStyles: https://github.com/toddmotto/fluidvids/blob/master/dist/fluidvids.js
-      var head = document.head || document.getElementsByTagName('head')[0];
-      var css = '.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}';
-      var div = document.createElement('div');
-      div.innerHTML = '<p>x</p><style id="fit-vids-style">' + css + '</style>';
-      head.appendChild(div.childNodes[1]);
-    }
-
-    if ( options ) {
-      $.extend( settings, options );
-    }
-
-    return this.each(function(){
-      var selectors = [
-        "iframe[src*='player.vimeo.com']",
-        "iframe[src*='youtube.com']",
-        "iframe[src*='youtube-nocookie.com']",
-        "iframe[src*='kickstarter.com'][src*='video.html']",
-        "object",
-        "embed"
-      ];
-
-      if (settings.customSelector) {
-        selectors.push(settings.customSelector);
-      }
-
-      var $allVideos = $(this).find(selectors.join(','));
-      $allVideos = $allVideos.not("object object"); // SwfObj conflict patch
-
-      $allVideos.each(function(){
-        var $this = $(this);
-        if (this.tagName.toLowerCase() === 'embed' && $this.parent('object').length || $this.parent('.fluid-width-video-wrapper').length) { return; }
-        var height = ( this.tagName.toLowerCase() === 'object' || ($this.attr('height') && !isNaN(parseInt($this.attr('height'), 10))) ) ? parseInt($this.attr('height'), 10) : $this.height(),
-            width = !isNaN(parseInt($this.attr('width'), 10)) ? parseInt($this.attr('width'), 10) : $this.width(),
-            aspectRatio = height / width;
-        if(!$this.attr('id')){
-          var videoID = 'fitvid' + Math.floor(Math.random()*999999);
-          $this.attr('id', videoID);
-        }
-        $this.wrap('<div class="fluid-width-video-wrapper"></div>').parent('.fluid-width-video-wrapper').css('padding-top', (aspectRatio * 100)+"%");
-        $this.removeAttr('height').removeAttr('width');
-      });
-    });
-  };
-// Works with either jQuery or Zepto
-})( window.jQuery || window.Zepto );
