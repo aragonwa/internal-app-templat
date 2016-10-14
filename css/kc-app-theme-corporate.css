@@ -1,6 +1,6 @@
 /*!
- * Bootstrap v3.3.6 (http://getbootstrap.com)
- * Copyright 2011-2015 Twitter, Inc.
+ * Bootstrap v3.3.7 (http://getbootstrap.com)
+ * Copyright 2011-2016 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
@@ -1095,7 +1095,6 @@ a:focus {
   text-decoration: underline;
 }
 a:focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -2526,7 +2525,6 @@ select[size] {
 input[type="file"]:focus,
 input[type="radio"]:focus,
 input[type="checkbox"]:focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -3027,7 +3025,6 @@ select[multiple].input-lg {
 .btn.focus,
 .btn:active.focus,
 .btn.active.focus {
-  outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
@@ -9410,11 +9407,6 @@ a:active {
 .remove-border-bottom a {
   border-bottom: none;
 }
-img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
 @-webkit-viewport {
   width: device-width;
 }
@@ -10030,10 +10022,6 @@ a.bg-danger:focus {
 }
 #footer-nav {
   background-color: #3e6673;
-  border-top: 2px solid #1a5373;
-}
-#footer-nav .col-sm-4 {
-  border-bottom: 2px solid #1a5373;
 }
 @media (min-width: 768px) {
   #footer-nav .col-sm-4 {
@@ -10065,7 +10053,7 @@ a.bg-danger:focus {
 }
 #footer-social-bar {
   position: relative;
-  background-color: #557e94;
+  background-color: #234f60;
   border-top: none;
   padding: 10px 0px 0px 0;
   line-height: 20px;
@@ -11275,7 +11263,7 @@ a.bg-danger:focus {
   border-bottom: none;
 }
 #global-nav {
-  background-color: #557e94;
+  background-color: #234f60;
   margin-bottom: 0px;
   font-size: 14px;
 }
